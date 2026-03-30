@@ -100,7 +100,8 @@ def conectar_planilha():
 
 
 def agora():
-    return datetime.now()
+    from zoneinfo import ZoneInfo
+    return datetime.now(ZoneInfo("America/Sao_Paulo")).replace(tzinfo=None)
 
 
 def data_str(dt):
