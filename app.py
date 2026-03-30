@@ -1,6 +1,5 @@
 import io
 from datetime import datetime
-from pathlib import Path
 
 import gspread
 import pandas as pd
@@ -92,26 +91,10 @@ def carregar_empresas():
 EMPRESAS = carregar_empresas()
 
 
-def localizar_credenciais():
-    candidatos = ["credentials.json", "credentials.json.json", "credenciais.json"]
-    pasta = Path(".")
-    for nome in candidatos:
-        arquivo = pasta / nome
-        if arquivo.exists():
-            return str(arquivo)
-    for arquivo in pasta.glob("*.json"):
-        nome = arquivo.name.lower()
-        if "credential" in nome or "credencial" in nome:
-            return str(arquivo)
-    return None
-
-
 @st.cache_resource
 def conectar_planilha():
-    cred_path = localizar_credenciais()
-    if not cred_path:
-        raise FileNotFoundError("Arquivo de credenciais não encontrado.")
-    creds = Credentials.from_service_account_file(cred_path, scopes=SCOPES)
+    info = dict(st.secrets["gcp_service_account"])
+    creds = Credentials.from_service_account_info(info, scopes=SCOPES)
     client = gspread.authorize(creds)
     return client.open_by_url(SHEET_URL).sheet1
 
