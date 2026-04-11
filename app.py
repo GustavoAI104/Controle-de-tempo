@@ -69,22 +69,52 @@ TIPOS_SUPORTE = [
 COLUNAS_PLANILHA = ["Colaborador", "Data", "Motivo", "Empresa", "Início", "Fim", "Total", "Observação"]
 
 
+
 def carregar_empresas():
     try:
         with open("empresas.txt", "r", encoding="utf-8") as f:
             linhas = f.readlines()
+
         empresas = []
+
         for linha in linhas:
             linha = linha.strip()
             if not linha:
                 continue
-            partes = linha.split("\t")
-            if len(partes) >= 2:
-                codigo = partes[0].strip()
-                resto = partes[1].strip()
-                empresas.append(f"{codigo} - {resto}")
-        return sorted(empresas)
-    except Exception:
+
+            # remove múltiplos espaços
+            linha = re.sub(r"\s+", " ", linha)
+
+            # separa código
+            partes = linha.split(" ", 1)
+
+            if len(partes) > 1:
+                codigo = partes[0]
+                resto = partes[1]
+
+                # remove traços duplicados
+                resto = re.sub(r"-+", "-", resto)
+
+                # separa CNPJ
+                match = re.search(r"\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}", resto)
+
+                if match:
+                    cnpj = match.group()
+                    nome = resto.replace(cnpj, "").strip()
+
+                    # remove traços extras no nome
+                    nome = nome.strip(" -")
+
+                    empresas.append(f"{codigo} - {nome} - {cnpj}")
+                else:
+                    nome = resto.strip(" -")
+                    empresas.append(f"{codigo} - {nome}")
+            else:
+                empresas.append(linha)
+
+        return sorted(set(empresas))  # remove duplicados
+
+    except FileNotFoundError:
         return []
 
 
