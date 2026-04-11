@@ -70,6 +70,8 @@ COLUNAS_PLANILHA = ["Colaborador", "Data", "Motivo", "Empresa", "Início", "Fim"
 
 
 
+import re
+
 def carregar_empresas():
     try:
         with open("empresas.txt", "r", encoding="utf-8") as f:
@@ -116,6 +118,7 @@ def carregar_empresas():
 
     except FileNotFoundError:
         return []
+
 
 
 EMPRESAS = carregar_empresas()
