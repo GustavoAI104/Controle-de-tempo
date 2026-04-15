@@ -15,7 +15,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive",
 ]
 
-COLABORADORES = ["Robson", "Rodrigo", "Eliz", "Gustavo", "Nathalie", "Enrico"]
+COLABORADORES = ["Robson", "Rodrigo", "Eliz", "Gustavo", "Nathálie", "Enrico", "Yara"]
 ADMIN_USUARIOS = ["Administrador"]
 SENHA_PADRAO = "fisco121*"
 MOTIVOS_BASE = [
