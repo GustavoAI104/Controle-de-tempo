@@ -19,7 +19,6 @@ COLABORADORES = ["Robson", "Rodrigo", "Eliz", "Gustavo", "Nathálie", "Enrico", 
 ADMIN_USUARIOS = ["Administrador"]
 SENHA_PADRAO = "fisco121*"
 MOTIVOS_BASE = [
-    "80 - Reclassificação",
     "81 - Apuração de crédito para Estimativa – Não Previdenciária",
     "88 - Apuração de Crédito - Não Previdenciária",
     "144 - Retificação de arquivos - Não Previdenciária",
